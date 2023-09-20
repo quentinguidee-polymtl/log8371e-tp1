@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Code Review</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* basic style */
+    body {
+      font-family: Helvetica;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: green;
+    }
+
+    h3 {
+      font-size: 16px;
+      padding-left: 5px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      white-space: pre-wrap;
+      margin: 0;
+    }
+
+    pre {
+      margin: 0
+    }
+
+    code {
+      border: 1px solid #999;
+      display: block;
+      white-space: pre-wrap;
+    }
+
+    /* links in headlines */
+    h3.lines-headline>a {
+      color: #005bbb;
+      text-decoration: none;
+    }
+
+    h3.lines-headline>a:hover {
+      text-decoration: underline;
+    }
+
+    /* table style */
+    table.review-table {
+      font-size: 14px;
+      padding-left: 10px;
+    }
+
+    table.review-table .caption {
+      font-weight: bold;
+      vertical-align: top;
+    }
+
+    table.review-table tr>td:first-child {
+      width: 120px
+    }
+
+    /* priority indicator */
+    .text>span:before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+      margin-left: -15px;
+    }
+
+    .text>span.prio-high:before {
+      background: #FF4500;
+    }
+
+    .text>span.prio-medium:before {
+      background: #FFD700;
+    }
+
+    .text>span.prio-low:before {
+      background: #9ACD32;
+    }
+
+    .text>span.prio-none:before {
+      background: #D3D3D3;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="main-headline">Code Review Results</h1>
+  <section class="file-section">
+    <h2 class="file-section-headline">\src\main\java\org\springframework\samples\petclinic\service\ClinicService.java</h2>
+    <h3 class="lines-headline">
+      <a href="">Position: 42:0-46:58</a>
+    </h3>
+    <table class="review-table">
+      <tr class="row-priority">
+        <td class="caption">Priority</td>
+        <td class="text">
+          <span class="prio-0">0</span>
+        </td>
+      </tr>
+      <tr class="row-title">
+        <td class="caption">Title</td>
+        <td class="text">Visit inside clinic service </td>
+      </tr>
+      <tr class="row-category">
+        <td class="caption">Category</td>
+        <td class="text">Separation of concerns</td>
+      </tr>
+      <tr class="row-description">
+        <td class="caption">Description</td>
+        <td class="text">
+          <p>The visit fonctionality is contain inside the same class &#x60;ClinicService&#x60; but is not exclusively contain. Other fonctionality like pet, vet and owner are also present in that class.</p>
+        </td>
+      </tr>
+      <tr class="row-sha">
+        <td class="caption">SHA</td>
+        <td class="text">699abf28e6608268bcf12a870aad4d64e2eb119d</td>
+      </tr>
+    </table>
+  </section>
+  <section class="file-section">
+    <h2 class="file-section-headline">\src\main\java\org\springframework\samples\petclinic\model\Visit.java</h2>
+    <h3 class="lines-headline">
+      <a href="">Position: 18:0-19:0</a>
+    </h3>
+    <table class="review-table">
+      <tr class="row-priority">
+        <td class="caption">Priority</td>
+        <td class="text">
+          <span class="prio-1">1</span>
+        </td>
+      </tr>
+      <tr class="row-title">
+        <td class="caption">Title</td>
+        <td class="text">Visit.java has an unused import</td>
+      </tr>
+      <tr class="row-category">
+        <td class="caption">Category</td>
+        <td class="text">Separation of concerns</td>
+      </tr>
+      <tr class="row-sha">
+        <td class="caption">SHA</td>
+        <td class="text">699abf28e6608268bcf12a870aad4d64e2eb119d</td>
+      </tr>
+    </table>
+    <h3 class="lines-headline">
+      <a href="">Position: 54:0-59:5</a>
+    </h3>
+    <table class="review-table">
+      <tr class="row-priority">
+        <td class="caption">Priority</td>
+        <td class="text">
+          <span class="prio-2">2</span>
+        </td>
+      </tr>
+      <tr class="row-title">
+        <td class="caption">Title</td>
+        <td class="text">Use of LocalDate for a visit</td>
+      </tr>
+      <tr class="row-category">
+        <td class="caption">Category</td>
+        <td class="text">Error Handling</td>
+      </tr>
+      <tr class="row-description">
+        <td class="caption">Description</td>
+        <td class="text">
+          <p>This LocalDate only consider the timezone of the docker  container and not the actual date of the visit. It could lead to time offset.</p>
+        </td>
+      </tr>
+      <tr class="row-sha">
+        <td class="caption">SHA</td>
+        <td class="text">699abf28e6608268bcf12a870aad4d64e2eb119d</td>
+      </tr>
+    </table>
+  </section>
+  <section class="file-section">
+    <h2 class="file-section-headline">\src\main\java\org\springframework\samples\petclinic\repository\jdbc\JdbcVisitRepositoryImpl.java</h2>
+    <h3 class="lines-headline">
+      <a href="">Position: 142:1-174:9</a>
+    </h3>
+    <table class="review-table">
+      <tr class="row-priority">
+        <td class="caption">Priority</td>
+        <td class="text">
+          <span class="prio-2">2</span>
+        </td>
+      </tr>
+      <tr class="row-title">
+        <td class="caption">Title</td>
+        <td class="text">Use of logic beloging to pet inside the visit row mapper</td>
+      </tr>
+      <tr class="row-category">
+        <td class="caption">Category</td>
+        <td class="text">Separation of concerns</td>
+      </tr>
+      <tr class="row-description">
+        <td class="caption">Description</td>
+        <td class="text">
+          <p>The mapRow method includes logic for how to create the pet instance but that logic sould be inside the pet class and repository instead of the the JdbcVisitRowMapperExt</p>
+        </td>
+      </tr>
+      <tr class="row-sha">
+        <td class="caption">SHA</td>
+        <td class="text">699abf28e6608268bcf12a870aad4d64e2eb119d</td>
+      </tr>
+    </table>
+  </section>
+  <section class="file-section">
+    <h2 class="file-section-headline">\target\generated-sources\openapi\src\main\java\org\springframework\samples\petclinic\rest\api\VisitsApi.java</h2>
+    <h3 class="lines-headline">
+      <a href="">Position: 10:37-10:58</a>
+    </h3>
+    <table class="review-table">
+      <tr class="row-priority">
+        <td class="caption">Priority</td>
+        <td class="text">
+          <span class="prio-0">0</span>
+        </td>
+      </tr>
+      <tr class="row-title">
+        <td class="caption">Title</td>
+        <td class="text">Unused import</td>
+      </tr>
+      <tr class="row-category">
+        <td class="caption">Category</td>
+        <td class="text">Best Practices</td>
+      </tr>
+      <tr class="row-description">
+        <td class="caption">Description</td>
+        <td class="text">
+          <p>ExternalDocumentation, Parameters, SecurityRequirement, MultipartFile and Map are imported but unused throughout the VisitApi.jave file</p>
+        </td>
+      </tr>
+      <tr class="row-sha">
+        <td class="caption">SHA</td>
+        <td class="text">699abf28e6608268bcf12a870aad4d64e2eb119d</td>
+      </tr>
+    </table>
+  </section>
+  <section class="file-section">
+    <h2 class="file-section-headline">\src\main\java\org\springframework\samples\petclinic\rest\controller\VisitRestController.java</h2>
+    <h3 class="lines-headline">
+      <a href="">Position: 48:0-51:5</a>
+    </h3>
+    <table class="review-table">
+      <tr class="row-priority">
+        <td class="caption">Priority</td>
+        <td class="text">
+          <span class="prio-0">0</span>
+        </td>
+      </tr>
+      <tr class="row-title">
+        <td class="caption">Title</td>
+        <td class="text">Use of the clinicService instead of a specialize service for the visit</td>
+      </tr>
+      <tr class="row-category">
+        <td class="caption">Category</td>
+        <td class="text">Separation of concerns</td>
+      </tr>
+      <tr class="row-description">
+        <td class="caption">Description</td>
+        <td class="text">
+          <p>The class VisitRestController should use specialize service for the visit only instead of using a the same service for all the controller</p>
+        </td>
+      </tr>
+      <tr class="row-sha">
+        <td class="caption">SHA</td>
+        <td class="text">699abf28e6608268bcf12a870aad4d64e2eb119d</td>
+      </tr>
+    </table>
+  </section>
+</body>
+
+</html>
