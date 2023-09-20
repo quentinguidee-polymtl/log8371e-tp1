@@ -28,6 +28,7 @@ import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.rest.api.OwnersApi;
 import org.springframework.samples.petclinic.rest.dto.*;
 import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.samples.petclinic.service.VisitService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,6 @@ import jakarta.transaction.Transactional;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Vitaliy Fedoriv
@@ -50,6 +50,7 @@ import java.util.Optional;
 public class OwnerRestController implements OwnersApi {
 
     private final ClinicService clinicService;
+    private final VisitService visitService;
 
     private final OwnerMapper ownerMapper;
 
@@ -60,10 +61,12 @@ public class OwnerRestController implements OwnersApi {
     public OwnerRestController(ClinicService clinicService,
                                OwnerMapper ownerMapper,
                                PetMapper petMapper,
+                               VisitService visitService,
                                VisitMapper visitMapper) {
         this.clinicService = clinicService;
         this.ownerMapper = ownerMapper;
         this.petMapper = petMapper;
+        this.visitService = visitService;
         this.visitMapper = visitMapper;
     }
 
@@ -155,7 +158,7 @@ public class OwnerRestController implements OwnersApi {
         Pet pet = new Pet();
         pet.setId(petId);
         visit.setPet(pet);
-        this.clinicService.saveVisit(visit);
+        this.visitService.saveVisit(visit);
         VisitDto visitDto = visitMapper.toVisitDto(visit);
         headers.setLocation(UriComponentsBuilder.newInstance().path("/api/visits/{id}")
             .buildAndExpand(visit.getId()).toUri());

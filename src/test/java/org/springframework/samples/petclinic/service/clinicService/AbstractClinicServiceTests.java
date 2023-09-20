@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.samples.petclinic.service.VisitService;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +53,9 @@ abstract class AbstractClinicServiceTests {
 
     @Autowired
     protected ClinicService clinicService;
+
+    @Autowired
+    protected VisitService visitService;
 
     @Test
     void shouldFindOwnersByLastName() {
@@ -179,7 +183,7 @@ abstract class AbstractClinicServiceTests {
         Visit visit = new Visit();
         pet7.addVisit(visit);
         visit.setDescription("test");
-        this.clinicService.saveVisit(visit);
+        this.visitService.saveVisit(visit);
         this.clinicService.savePet(pet7);
 
         pet7 = this.clinicService.findPetById(7);
@@ -189,7 +193,7 @@ abstract class AbstractClinicServiceTests {
 
     @Test
        void shouldFindVisitsByPetId() throws Exception {
-        Collection<Visit> visits = this.clinicService.findVisitsByPetId(7);
+        Collection<Visit> visits = this.visitService.findVisitsByPetId(7);
         assertThat(visits.size()).isEqualTo(2);
         Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
         assertThat(visitArr[0].getPet()).isNotNull();
@@ -221,14 +225,14 @@ abstract class AbstractClinicServiceTests {
 
     @Test
     void shouldFindVisitDyId(){
-    	Visit visit = this.clinicService.findVisitById(1);
+    	Visit visit = this.visitService.findVisitById(1);
     	assertThat(visit.getId()).isEqualTo(1);
     	assertThat(visit.getPet().getName()).isEqualTo("Samantha");
     }
 
     @Test
     void shouldFindAllVisits(){
-        Collection<Visit> visits = this.clinicService.findAllVisits();
+        Collection<Visit> visits = this.visitService.findAllVisits();
         Visit visit1 = EntityUtils.getById(visits, Visit.class, 1);
         assertThat(visit1.getPet().getName()).isEqualTo("Samantha");
         Visit visit3 = EntityUtils.getById(visits, Visit.class, 3);
@@ -238,7 +242,7 @@ abstract class AbstractClinicServiceTests {
     @Test
     @Transactional
     void shouldInsertVisit() {
-        Collection<Visit> visits = this.clinicService.findAllVisits();
+        Collection<Visit> visits = this.visitService.findAllVisits();
         int found = visits.size();
 
         Pet pet = this.clinicService.findPetById(1);
@@ -249,32 +253,32 @@ abstract class AbstractClinicServiceTests {
         visit.setDescription("new visit");
 
 
-        this.clinicService.saveVisit(visit);
+        this.visitService.saveVisit(visit);
         assertThat(visit.getId().longValue()).isNotEqualTo(0);
 
-        visits = this.clinicService.findAllVisits();
+        visits = this.visitService.findAllVisits();
         assertThat(visits.size()).isEqualTo(found + 1);
     }
 
     @Test
     @Transactional
     void shouldUpdateVisit(){
-    	Visit visit = this.clinicService.findVisitById(1);
+    	Visit visit = this.visitService.findVisitById(1);
     	String oldDesc = visit.getDescription();
         String newDesc = oldDesc + "X";
         visit.setDescription(newDesc);
-        this.clinicService.saveVisit(visit);
-        visit = this.clinicService.findVisitById(1);
+        this.visitService.saveVisit(visit);
+        visit = this.visitService.findVisitById(1);
         assertThat(visit.getDescription()).isEqualTo(newDesc);
     }
 
     @Test
     @Transactional
     void shouldDeleteVisit(){
-    	Visit visit = this.clinicService.findVisitById(1);
-        this.clinicService.deleteVisit(visit);
+    	Visit visit = this.visitService.findVisitById(1);
+        this.visitService.deleteVisit(visit);
         try {
-        	visit = this.clinicService.findVisitById(1);
+        	visit = this.visitService.findVisitById(1);
 		} catch (Exception e) {
 			visit = null;
 		}

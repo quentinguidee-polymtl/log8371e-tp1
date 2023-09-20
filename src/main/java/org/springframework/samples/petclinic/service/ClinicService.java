@@ -23,7 +23,6 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.model.Visit;
 
 
 /**
@@ -38,12 +37,6 @@ public interface ClinicService {
 	Collection<Pet> findAllPets() throws DataAccessException;
 	void savePet(Pet pet) throws DataAccessException;
 	void deletePet(Pet pet) throws DataAccessException;
-
-	Collection<Visit> findVisitsByPetId(int petId);
-	Visit findVisitById(int visitId) throws DataAccessException;
-	Collection<Visit> findAllVisits() throws DataAccessException;
-	void saveVisit(Visit visit) throws DataAccessException;
-	void deleteVisit(Visit visit) throws DataAccessException;
 	
 	Vet findVetById(int id) throws DataAccessException;
 	Collection<Vet> findVets() throws DataAccessException;
